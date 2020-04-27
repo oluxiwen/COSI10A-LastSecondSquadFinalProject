@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>COSI10A-Last Second Squad Final Project</title>
+
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container d-flex justify-content-between">
+      <a href="#" class="navbar-brand d-flex align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="mr-2" viewBox="0 0 24 24" focusable="false"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <strong>Last Second Squad Final Project</strong>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    </div>
+  </head>
+  <body>
+    <section class="jumbotron text-center">
+      <div class="container">
+        <h1>Game Sales</h1>
+        <p class="lead text-muted">Date sourece <a href = "https://www.kaggle.com/kedokedokedo/vgsales" target="_blank">https://www.kaggle.com/kedokedokedo/vgsales</a>
+        <p class="lead text-muted">You can search game sales data by Platform, Year, Publisher, Genre with max records.</p>
+        <form action="/" method="post">
+        <div class="form-row">
+          <div class="col-md-3 mb-3">
+            <label for="platform">Platform</label>
+            <select class="form-control" id="platform" name="platform">
+              <option value="">Choose...</option>
+              {%for p in state['platforms']%}
+                <option value="{{p}}" {% if p==state['platform'] %} selected{% endif %}>{{p}}</option>
+              {%endfor%}
+            </select>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="year">Year</label>
+            <select class="form-control" id="year" name="year">
+              <option value="">Choose...</option>
+              {%for p in state['years']%}
+                <option value="{{p}}" {% if p==state['year'] %} selected{% endif %}>{{p}}</option>
+              {%endfor%}
+            </select>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="publisher">Publisher</label>
+            <select class="form-control" id="publisher" name="publisher">
+              <option value="">Choose...</option>
+              {%for p in state['publishers']%}
+                <option value="{{p}}" {% if p==state['publisher'] %} selected{% endif %}>{{p}}</option>
+              {%endfor%}
+            </select>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="genre">Genre</label>
+            <select class="form-control" id="genre" name="genre">
+              <option value="">Choose...</option>
+              {%for p in state['genres']%}
+                <option value="{{p}}" {% if p==state['genre'] %} selected{% endif %}>{{p}}</option>
+              {%endfor%}
+            </select>
+          </div>
+        </div>
+        <div class="form-group form-inline justify-content-center">
+          <label for="limit">Limit</label>
+          <input type="number" value="{{state['limit']}}" min="0" id="limit" class="form-control mx-sm-3" aria-describedby="limit" name="limit">
+          <small id="limit-desc" class="text-muted">
+            0 to return all records.
+          </small>
+        </div>
+        <button class="btn btn-primary" type="submit">Search</button>
+      </form>
+      </div>
+    </section>
+    <div class="album py-5 bg-light">
+      <div class="container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Rank</th>
+              <th scope="col">Name</th>
+              <th scope="col">Platform</th>
+              <th scope="col">Year</th>
+              <th scope="col">Genre</th>
+              <th scope="col">Publisher</th>
+              <th scope="col">NA_Sales</th>
+              <th scope="col">EU_Sales</th>
+              <th scope="col">JP_Sales</th>
+              <th scope="col">Other_Sales</th>
+              <th scope="col">Global_Sales</th>
+            </tr>
+          </thead>
+          <tbody>
+          {%for games in state['games']%}
+            <tr>
+              <td>{{games['Rank']}}</td>
+              <td>{{games['Name']}}</td>
+              <td>{{games['Platform']}}</td>
+              <td>{{games['Year']}}</td>
+              <td>{{games['Genre']}}</td>
+              <td>{{games['Publisher']}}</td>
+              <td>{{games['NA_Sales']}}</td>
+              <td>{{games['EU_Sales']}}</td>
+              <td>{{games['JP_Sales']}}</td>
+              <td>{{games['Other_Sales']}}</td>
+              <td>{{games['Global_Sales']}}</td>
+            </tr>
+          {%endfor%}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
